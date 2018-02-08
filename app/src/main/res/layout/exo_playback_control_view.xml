@@ -18,9 +18,9 @@
         <!--android:tint="#FF00A6FF"-->
         <!--style="@style/ExoMediaButton.Previous"/>-->
 
-        <ImageButton android:id="@id/exo_rew"
-            android:tint="#FF5D29C1"
-            style="@style/ExoMediaButton.Rewind"/>
+        <!--<ImageButton android:id="@id/exo_rew"-->
+            <!--android:tint="#FF5D29C1"-->
+            <!--style="@style/ExoMediaButton.Rewind"/>-->
 
         <!--<ImageButton android:id="@id/exo_shuffle"-->
         <!--android:tint="#FF00A6FF"-->
@@ -38,9 +38,9 @@
             android:tint="#FF5D29C1"
             style="@style/ExoMediaButton.Pause"/>
 
-        <ImageButton android:id="@id/exo_ffwd"
-            android:tint="#FF5D29C1"
-            style="@style/ExoMediaButton.FastForward"/>
+        <!--<ImageButton android:id="@id/exo_ffwd"-->
+            <!--android:tint="#FF5D29C1"-->
+            <!--style="@style/ExoMediaButton.FastForward"/>-->
 
         <!--<ImageButton android:id="@id/exo_next"-->
         <!--android:tint="#FF00A6FF"-->
