@@ -2,6 +2,7 @@ package com.mikkipastel.videoplanet
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.mikkipastel.videoplanet.playlist.PlaylistFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,7 +12,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.contentContainer, PlayerFragment.newInstance())
+                    .replace(R.id.contentContainer, PlaylistFragment.newInstance())
                     .commit()
         }
     }
