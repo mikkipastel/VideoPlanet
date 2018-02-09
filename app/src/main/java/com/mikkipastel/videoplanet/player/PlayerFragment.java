@@ -17,7 +17,7 @@ import com.mikkipastel.videoplanet.R;
 
 import java.io.File;
 
-public class PlayerFragment extends Fragment implements CacheListener {
+public class PlayerFragment extends Fragment {
 
     private static final String BUNDLE_URL = "bundle_url";
 
@@ -122,8 +122,4 @@ public class PlayerFragment extends Fragment implements CacheListener {
         }
     }
 
-    @Override
-    public void onCacheAvailable(File cacheFile, String url, int percentsAvailable) {
-        Log.d("__onCacheAvailable", percentsAvailable + "");
-    }
 }
