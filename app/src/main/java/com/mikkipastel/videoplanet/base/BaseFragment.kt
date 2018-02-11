@@ -1,4 +1,4 @@
-package com.mikkipastel.videoplanet
+package com.mikkipastel.videoplanet.base
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

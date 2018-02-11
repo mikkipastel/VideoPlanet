@@ -1,4 +1,4 @@
-package com.mikkipastel.videoplanet;
+package com.mikkipastel.videoplanet.base;
 
 import android.app.Application;
 import android.content.Context;

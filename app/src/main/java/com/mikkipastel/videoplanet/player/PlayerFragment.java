@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
-import com.mikkipastel.videoplanet.BaseFragment;
+import com.mikkipastel.videoplanet.base.BaseFragment;
 import com.mikkipastel.videoplanet.R;
 
 public class PlayerFragment extends BaseFragment {

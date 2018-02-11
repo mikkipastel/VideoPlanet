@@ -1,6 +1,7 @@
 package com.mikkipastel.videoplanet
 
 import android.os.Bundle
+import com.mikkipastel.videoplanet.base.BaseActivity
 import com.mikkipastel.videoplanet.playlist.PlaylistFragment
 
 class MainActivity : BaseActivity() {
