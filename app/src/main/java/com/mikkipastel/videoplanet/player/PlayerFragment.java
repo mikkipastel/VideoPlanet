@@ -5,25 +5,19 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.danikula.videocache.CacheListener;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.mikkipastel.videoplanet.BaseFragment;
 import com.mikkipastel.videoplanet.R;
 
-import java.io.File;
-
-public class PlayerFragment extends Fragment {
+public class PlayerFragment extends BaseFragment {
 
     private static final String BUNDLE_URL = "bundle_url";
 
     private SimpleExoPlayerView playerView;
-
-    protected PlayerManager playerManager;
 
     private String videoUrl;
 
@@ -47,8 +41,9 @@ public class PlayerFragment extends Fragment {
     private void initInstances(View rootView) {
         playerView = rootView.findViewById(R.id.video_view);
 
-        playerManager = PlayerManager.with(getContext());
-        playerManager.bind();
+        if (playerManager.getService() == null) {
+            playerManager.bind();
+        }
 
         playerView.setControllerHideOnTouch(false);
         playerView.setControllerShowTimeoutMs(0);
@@ -68,6 +63,13 @@ public class PlayerFragment extends Fragment {
         managerBinding();
     }
 
+    @Override
+    public void onDestroy() {
+        playerManager.unbind();
+
+        super.onDestroy();
+    }
+
     private void managerBinding() {
         Bundle bundle = getArguments();
         if (hasArguments(bundle)) {
@@ -81,13 +83,6 @@ public class PlayerFragment extends Fragment {
             playerView.setPlayer(playerManager.getService().exoPlayer);
         }
 
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        playerManager.unbind();
     }
 
     @SuppressLint("InlinedApi")

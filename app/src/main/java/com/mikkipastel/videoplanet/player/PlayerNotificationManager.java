@@ -1,23 +1,23 @@
 package com.mikkipastel.videoplanet.player;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
+import android.support.v4.media.app.NotificationCompat.MediaStyle;
 
-import com.google.android.exoplayer2.ExoPlayer;
 import com.mikkipastel.videoplanet.MainActivity;
 import com.mikkipastel.videoplanet.R;
-
-import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class PlayerNotificationManager {
 
     private static final int NOTIFICATION_ID = 555;
+
+    private static final int REQUEST_CODE_PAUSE = 1;
+    private static final int REQUEST_CODE_PLAY = 2;
+    private static final int REQUEST_CODE_STOP = 3;
 
     private PlayerService service;
 
@@ -32,22 +32,25 @@ public class PlayerNotificationManager {
         mAppname = resources.getString(R.string.app_name);
     }
 
+    public PendingIntent createAction(String action, int requestCode) {
+        Intent intent = new Intent(service, PlayerService.class);
+        intent.setAction(action);
+        return PendingIntent.getService(service, requestCode, intent, 0);
+    }
+
     public void startNotify(String playbackStatus) {
 
         int icon = R.drawable.ic_pause;
-        Intent playbackAction = new Intent(service, PlayerService.class);
-        playbackAction.setAction(PlayerService.ACTION_PAUSE);
-        PendingIntent action = PendingIntent.getService(service, 1, playbackAction, 0);
+
+        PendingIntent playPauseAction = createAction(PlayerService.ACTION_PAUSE, REQUEST_CODE_PAUSE);
 
         if (playbackStatus.equals(PlaybackStatus.PAUSED)) {
             icon = R.drawable.ic_play_arrow;
-            playbackAction.setAction(PlayerService.ACTION_PLAY);
-            action = PendingIntent.getService(service, 2, playbackAction, 0);
+
+            playPauseAction = createAction(PlayerService.ACTION_PLAY, REQUEST_CODE_PLAY);
         }
 
-        Intent stopIntent = new Intent(service, PlayerService.class);
-        stopIntent.setAction(PlayerService.ACTION_STOP);
-        PendingIntent stopAction = PendingIntent.getService(service, 3, stopIntent, 0);
+        PendingIntent stopAction = createAction(PlayerService.ACTION_STOP, REQUEST_CODE_STOP);
 
         Intent intent = new Intent(service, MainActivity.class);
         intent.setAction(Intent.ACTION_MAIN);
@@ -56,14 +59,19 @@ public class PlayerNotificationManager {
 
         NotificationManagerCompat.from(service).cancel(NOTIFICATION_ID);
 
-        Notification.Builder builder = new Notification.Builder(service)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(service)
                 .setSmallIcon(R.drawable.exo_edit_mode_logo)
                 .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
                 .setContentTitle(mAppname)
                 .setContentText("Hello World! Testing video service")
                 .setContentIntent(pendingIntent)
-                .addAction(icon, "pause", action)
-                .addAction(R.drawable.ic_stop, "stop", stopAction);
+                .addAction(icon, "pause", playPauseAction)
+                .addAction(R.drawable.ic_stop, "stop", stopAction)
+                .setStyle(new MediaStyle()
+                        .setMediaSession(service.getMediaSession().getSessionToken())
+                        .setShowActionsInCompactView(0, 1)
+                        .setShowCancelButton(true)
+                        .setCancelButtonIntent(stopAction));
 
         service.startForeground(NOTIFICATION_ID, builder.build());
     }
@@ -71,4 +79,5 @@ public class PlayerNotificationManager {
     public void cancelNotify() {
         service.stopForeground(true);
     }
+
 }

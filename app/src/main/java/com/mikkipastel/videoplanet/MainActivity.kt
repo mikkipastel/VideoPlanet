@@ -1,10 +1,9 @@
 package com.mikkipastel.videoplanet
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.mikkipastel.videoplanet.playlist.PlaylistFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

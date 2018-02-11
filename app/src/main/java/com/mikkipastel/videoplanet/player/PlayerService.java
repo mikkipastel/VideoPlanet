@@ -6,14 +6,14 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Binder;
-import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.danikula.videocache.CacheListener;
-import com.danikula.videocache.HttpProxyCacheServer;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -38,14 +38,10 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.mikkipastel.videoplanet.MainApplication;
-import com.mikkipastel.videoplanet.R;
-import com.mikkipastel.videoplanet.cache.Utils;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
-import java.io.IOException;
 
 public class PlayerService extends Service implements AudioManager.OnAudioFocusChangeListener, Player.EventListener, CacheListener {
 
@@ -59,6 +55,9 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
     private MediaSessionCompat mediaSession;
 
     private PlayerNotificationManager notificationManager;
+    private MediaControllerCompat.TransportControls transportControls;
+
+    private AudioManager audioManager;
 
     private String status;
 
@@ -70,15 +69,45 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
         }
     }
 
+    private MediaSessionCompat.Callback mediasSessionCallback = new MediaSessionCompat.Callback() {
+        @Override
+        public void onPause() {
+            super.onPause();
+
+            pause();
+        }
+
+        @Override
+        public void onStop() {
+            super.onStop();
+
+            stop();
+
+            notificationManager.cancelNotify();
+        }
+
+        @Override
+        public void onPlay() {
+            super.onPlay();
+
+            resume();
+        }
+    };
+
     @Override
     public void onCreate() {
         super.onCreate();
 
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
         notificationManager = new PlayerNotificationManager(this);
 
         mediaSession = new MediaSessionCompat(this, getClass().getSimpleName());
+        transportControls = mediaSession.getController().getTransportControls();
         mediaSession.setActive(true);
-        mediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
+        mediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS
+                | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
+        mediaSession.setCallback(mediasSessionCallback);
 
         RenderersFactory renderersFactory = new DefaultRenderersFactory(getApplicationContext());
         DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
@@ -99,6 +128,39 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
         Log.d("__onBind", "PlayerService onbind " + intent);
 
         return playerBind;
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        String action = intent.getAction();
+
+        if(TextUtils.isEmpty(action))
+            return START_NOT_STICKY;
+
+        int result = audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+        if(result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED){
+            stop();
+
+            return START_NOT_STICKY;
+        }
+
+        if(action.equalsIgnoreCase(ACTION_PLAY)){
+            transportControls.play();
+
+        } else if(action.equalsIgnoreCase(ACTION_PAUSE)) {
+
+            if (PlaybackStatus.STOPPED == status) {
+                transportControls.stop();
+            } else {
+                transportControls.pause();
+            }
+
+        } else if(action.equalsIgnoreCase(ACTION_STOP)){
+            transportControls.stop();
+        }
+
+        return START_NOT_STICKY;
     }
 
     @Override
@@ -264,6 +326,8 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
 
     public void pause() {
         exoPlayer.setPlayWhenReady(false);
+
+        audioManager.abandonAudioFocus(this);
     }
 
     public void resume() {
@@ -273,6 +337,8 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
 
     public void stop() {
         exoPlayer.stop();
+
+        audioManager.abandonAudioFocus(this);
     }
 
     public void init(String streamUrl) {
@@ -297,21 +363,18 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
 
     public void playOrPause(String url) {
         if (streamUrl != null && streamUrl.equals(url)) {
-            if (!isPlaying()) {
-                play();
-            } else {
-                pause();
-            }
+            play();
         } else {
-            if (isPlaying()) {
-                pause();
-            }
             init(url);
         }
     }
 
     public boolean isPlaying(){
         return this.status.equals(PlaybackStatus.PLAYING);
+    }
+
+    public MediaSessionCompat getMediaSession(){
+        return mediaSession;
     }
 
 }
