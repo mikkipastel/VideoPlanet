@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="bottom"
     android:layoutDirection="ltr"
     android:background="#22000000"
@@ -63,13 +64,18 @@
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:includeFontPadding="false"
-            android:textColor="#FF5D29C1"/>
+            android:textColor="#FFFFFFFF"/>
 
         <com.google.android.exoplayer2.ui.DefaultTimeBar
             android:id="@id/exo_progress"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="26dp"/>
+            android:layout_height="16dp"
+            app:bar_height="1dp"
+            app:played_color="@color/colorAccent"
+            app:unplayed_color="#FFFFFFFF"
+            app:buffered_color="#FFFFFFFF"
+            app:scrubber_color="#FF5D29C1"/>
 
         <TextView android:id="@id/exo_duration"
             android:layout_width="wrap_content"
@@ -79,7 +85,7 @@
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:includeFontPadding="false"
-            android:textColor="#FF5D29C1"/>
+            android:textColor="#FFFFFFFF"/>
 
     </LinearLayout>
 
