@@ -119,14 +119,11 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
         exoPlayer.addListener(this);
 
         status = PlaybackStatus.IDLE;
-        Log.d("__onCreate", "PlayerService onCreate ");
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Log.d("__onBind", "PlayerService onbind " + intent);
-
         return playerBind;
     }
 
@@ -157,7 +154,9 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
             }
 
         } else if(action.equalsIgnoreCase(ACTION_STOP)){
-            transportControls.stop();
+            pause();
+
+            notificationManager.cancelNotify();
         }
 
         return START_NOT_STICKY;
@@ -177,8 +176,6 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
 //            e.printStackTrace();
 //            Log.d("__IOException", e.toString());
 //        }
-
-        Log.d("__onUnbind", "PlayerService onUnbind " + intent);
 
         return super.onUnbind(intent);
     }
