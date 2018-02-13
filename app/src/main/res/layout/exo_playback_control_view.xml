@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="bottom"
     android:layoutDirection="ltr"
-    android:background="#22000000"
+    android:background="#11000000"
     android:orientation="vertical">
 
     <LinearLayout
@@ -27,17 +27,21 @@
         <!--android:tint="#FF00A6FF"-->
         <!--style="@style/ExoMediaButton.Shuffle"/>-->
 
-        <ImageButton android:id="@id/exo_repeat_toggle"
-            android:tint="#FF5D29C1"
-            style="@style/ExoMediaButton"/>
+        <!--<ImageButton android:id="@id/exo_repeat_toggle"-->
+            <!--android:tint="#FF5D29C1"-->
+            <!--style="@style/ExoMediaButton"/>-->
 
         <ImageButton android:id="@id/exo_play"
-            android:tint="#FF5D29C1"
-            style="@style/ExoMediaButton.Play"/>
+            android:layout_height="50dp"
+            android:layout_width="50dp"
+            android:background="@drawable/circle_purple_transparent"
+            android:src="@drawable/ic_play_player"/>
 
         <ImageButton android:id="@id/exo_pause"
-            android:tint="#FF5D29C1"
-            style="@style/ExoMediaButton.Pause"/>
+            android:layout_height="50dp"
+            android:layout_width="50dp"
+            android:background="@drawable/circle_purple_transparent"
+            android:src="@drawable/ic_pause_player"/>
 
         <!--<ImageButton android:id="@id/exo_ffwd"-->
             <!--android:tint="#FF5D29C1"-->

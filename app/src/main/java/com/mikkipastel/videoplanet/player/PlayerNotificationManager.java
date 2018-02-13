@@ -40,12 +40,12 @@ public class PlayerNotificationManager {
 
     public void startNotify(String playbackStatus) {
 
-        int icon = R.drawable.ic_pause;
+        int icon = R.drawable.ic_pause_noti;
 
         PendingIntent playPauseAction = createAction(PlayerService.ACTION_PAUSE, REQUEST_CODE_PAUSE);
 
         if (playbackStatus.equals(PlaybackStatus.PAUSED)) {
-            icon = R.drawable.ic_play_arrow;
+            icon = R.drawable.ic_play_noti;
 
             playPauseAction = createAction(PlayerService.ACTION_PLAY, REQUEST_CODE_PLAY);
         }
@@ -66,7 +66,7 @@ public class PlayerNotificationManager {
                 .setContentText("Hello World! Testing video service")
                 .setContentIntent(pendingIntent)
                 .addAction(icon, "pause", playPauseAction)
-                .addAction(R.drawable.ic_stop, "stop", stopAction)
+                .addAction(R.drawable.ic_stop_noti, "stop", stopAction)
                 .setStyle(new MediaStyle()
                         .setMediaSession(service.getMediaSession().getSessionToken())
                         .setShowActionsInCompactView(0, 1)
