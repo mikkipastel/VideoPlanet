@@ -27,11 +27,8 @@ class RecyclerAdapter(internal var mListener: ItemListener, internal var mVideoL
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        internal var name: TextView
+        internal var name: TextView = view.findViewById(R.id.txt_name) as TextView
 
-        init {
-            name = view.findViewById(R.id.txt_name) as TextView
-        }
     }
 
     override fun getItemCount(): Int {

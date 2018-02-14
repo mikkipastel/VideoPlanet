@@ -3,16 +3,15 @@ package com.mikkipastel.videoplanet.playlist
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mikkipastel.videoplanet.R
 import com.mikkipastel.videoplanet.player.PlayerFragment
+import kotlinx.android.synthetic.main.fragment_playlist.*
 
 class PlaylistFragment : Fragment(), ItemListener {
 
-    lateinit var videoListView: RecyclerView
     lateinit var mAdapter: RecyclerAdapter
 
     // TODO: change to call api
@@ -26,24 +25,20 @@ class PlaylistFragment : Fragment(), ItemListener {
             "http://mirrors.standaloneinstaller.com/video-sample/Panasonic_HDC_TM_700_P_50i.mp4")
 
     companion object {
-        fun newInstance(): PlaylistFragment {
-            return PlaylistFragment()
-        }
+        fun newInstance() = PlaylistFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_playlist, container, false)
-        initInstances(rootView)
-        return rootView
+        return inflater.inflate(R.layout.fragment_playlist, container, false)
     }
 
-    private fun initInstances(rootView: View) {
-        videoListView = rootView.findViewById(R.id.videolist)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         mAdapter = RecyclerAdapter(this, videoname)
-        videoListView.isNestedScrollingEnabled = false
-        videoListView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        videoListView.adapter = mAdapter
+        videolist.isNestedScrollingEnabled = false
+        videolist.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        videolist.adapter = mAdapter
         mAdapter.notifyDataSetChanged()
     }
 
