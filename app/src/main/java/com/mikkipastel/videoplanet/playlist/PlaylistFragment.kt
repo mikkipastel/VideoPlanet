@@ -15,14 +15,15 @@ class PlaylistFragment : Fragment(), ItemListener {
     lateinit var mAdapter: RecyclerAdapter
 
     // TODO: change to call api
-    var videoname = arrayOf("BigBuckBunny", "small", "jellyfish-25-mbps-hd-hevc", "lion-sample", "page18-movie-4", "Panasonic_HDC_TM_700_P_50i")
+    var videoname = arrayOf("BigBuckBunny", "small", "jellyfish-25-mbps-hd-hevc", "lion-sample", "page18-movie-4", "Panasonic_HDC_TM_700_P_50i", "dizzy")
 
     var url = arrayOf("http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4",
             "http://techslides.com/demos/sample-videos/small.mp4",
             "http://mirrors.standaloneinstaller.com/video-sample/jellyfish-25-mbps-hd-hevc.mp4",
             "http://mirrors.standaloneinstaller.com/video-sample/lion-sample.mp4",
             "http://mirrors.standaloneinstaller.com/video-sample/page18-movie-4.mp4",
-            "http://mirrors.standaloneinstaller.com/video-sample/Panasonic_HDC_TM_700_P_50i.mp4")
+            "http://mirrors.standaloneinstaller.com/video-sample/Panasonic_HDC_TM_700_P_50i.mp4",
+            "https://html5demos.com/assets/dizzy.mp4")
 
     companion object {
         fun newInstance() = PlaylistFragment()
