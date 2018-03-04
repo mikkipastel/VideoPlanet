@@ -6,15 +6,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.exoplayer2.ui.PlayerView
 
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView
 import com.mikkipastel.videoplanet.base.BaseFragment
 import com.mikkipastel.videoplanet.R
 import com.mikkipastel.videoplanet.player.PlayerManager.getService
 
 class PlayerFragment : BaseFragment() {
 
-    private var playerView: SimpleExoPlayerView? = null
+    private var playerView: PlayerView? = null
 
     private var videoUrl: String? = null
 

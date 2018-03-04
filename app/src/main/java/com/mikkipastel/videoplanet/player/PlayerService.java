@@ -219,7 +219,7 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
     }
 
     @Override
-    public void onTimelineChanged(Timeline timeline, Object manifest) {
+    public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
 
     }
 
