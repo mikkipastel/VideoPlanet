@@ -6,9 +6,12 @@ This is sample source code in ExoPlayer session at Android Bangkok 2018 (31 Mar.
 - video streaming with Exoplayer
 - video service
 - RecyclerView
+- Kotlin
 
-### Reference
-from Exoplayer codelab : https://codelabs.developers.google.com/codelabs/exoplayer-intro/index.html
+## Official ExoPlayer Resource
+- Github : https://github.com/google/ExoPlayer
+- Guideline : https://google.github.io/ExoPlayer/guide.htm
+- Developer blog : https://medium.com/google-exoplayer
+- Codelab : https://codelabs.developers.google.com/codelabs/exoplayer-intro/index.html
 
-## Medium blog
-coming soon within next Saturday (7 Apr. 18)
+and my Medium blog is coming soon within next Saturday (7 Apr. 18)
