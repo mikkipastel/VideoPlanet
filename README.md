@@ -14,4 +14,4 @@ This is sample source code in ExoPlayer session at Android Bangkok 2018 (31 Mar.
 - Developer blog : https://medium.com/google-exoplayer
 - Codelab : https://codelabs.developers.google.com/codelabs/exoplayer-intro/index.html
 
-and my Medium blog is coming soon within next Saturday (7 Apr. 18)
+and my Medium blog is https://medium.com/fungjai/playing-video-by-exoplayer-b97903be0b33
