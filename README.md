@@ -1,10 +1,17 @@
 # VideoPlanet
 I try to create video streaming application with Exoplayer which will be similar with YouTube.
+This is sample source code in ExoPlayer session at Android Bangkok 2018 (31 Mar. 18)
 
 ### Purpose
 - video streaming with Exoplayer
 - video service
 - RecyclerView
+- Kotlin
 
-### Reference
-from Exoplayer codelab : https://codelabs.developers.google.com/codelabs/exoplayer-intro/index.html
+## Official ExoPlayer Resource
+- Github : https://github.com/google/ExoPlayer
+- Guideline : https://google.github.io/ExoPlayer/guide.htm
+- Developer blog : https://medium.com/google-exoplayer
+- Codelab : https://codelabs.developers.google.com/codelabs/exoplayer-intro/index.html
+
+and my Medium blog is https://medium.com/fungjai/playing-video-by-exoplayer-b97903be0b33
